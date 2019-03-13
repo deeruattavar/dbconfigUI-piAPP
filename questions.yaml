@@ -12,19 +12,19 @@ questions:
 - variable: "container_name"
   label: Container Name
   description: "Name of the container to be deployed."
-  default: "sim-edge-app-inventory"
+  default: "pi-app-db-config"
   required: true
   type: string
-  group: "Siemens Inventory Configurations" 
+  group: "DB Init Configurations" 
 
 # User input Image Name
 - variable: "image.repository"
   label: Image Name
   description: "Name of the Image."
-  default: "siemens/inventory-ui"
+  default: "pi-db-config"
   required: true
   type: string
-  group: "Siemens Inventory Configurations" 
+  group: "DB Init Configurations" 
   
 # User input Image Tag
 - variable: "image.tag"
@@ -33,117 +33,14 @@ questions:
   default: "0.0.1.12"
   required: true
   type: string
-  group: "Siemens Inventory Configurations"
+  group: "DB Init Configurations"
 
 # User input interface name
-- variable: "proxy.interface"
-  label: Interface Name
-  description: "Name of the Network interface."
+- variable: "proxy.ipaddress"
+  label: IP of PI App 
+  description: "IP of PI app to be configure."
   default: ""
   required: true
   type: string
-  group: "Siemens Inventory Configurations" 
+  group: "DB Init Configurations" 
 
-- variable: "proxy.centralMqtt"
-  label: Central Mqtt
-  description: "Central MQQT"
-  default: ""
-  required: true
-  type: string
-  group: "Siemens Inventory Configurations"
-  
-- variable: "proxy.scannerMqtt"
-  label: Scanner Mqtt
-  description: "Scanner MQQT"
-  default: ""
-  required: true
-  type: string
-  group: "Siemens Inventory Configurations"
-
-- variable: "auth.brokerUsername"
-  label: Broker Username
-  description: "Broker Username"
-  default: ""
-  required: true
-  type: string
-  group: "Siemens Inventory Configurations"
-
-- variable: "auth.brokerPassword"
-  label: Broker Password
-  description: "Broker Password"
-  default: ""
-  required: true
-  type: password
-  group: "Siemens Inventory Configurations"
-
-- variable: service.enabled
-  default: false
-  description: "Choose to Enable Service"
-  label: Choose to Enable Service
-  type: boolean
-  show_subquestion_if: false
-  group: "Services and Load Balancing"
-  subquestions:
-
-
-  #service and load balancing
-- variable: service.type
-  default: "ClusterIP"
-  description: "Inventory K8s Service type"
-  type: enum
-  group: "Services and Load Balancing"
-  options:
-    - "ClusterIP"
-    - "NodePort"
-  required: true
-  label: Inventory Service Type
-  show_if: "service.enabled=true"
-  show_subquestion_if: "NodePort"
-  subquestions:
-  - variable: service.nodePort
-    default: ""
-    description: "NodePort port number(to set explicitly, choose port between 30000-32767)"
-    type: int
-    min: 30000
-    max: 32767
-    label: Service NodePort number
-
-- variable: proxy.http_proxy
-  label: Environment's http proxy
-  description: "Environment's http proxy"
-  default: 'http://194.138.0.25:9400'
-  required: false
-  type: string
-  group: "Siemens NodeRed Configurations"
-
-  # User input of environment's https_proxy settings
-- variable: proxy.https_proxy
-  label: Environment's https proxy
-  description: "Environment's https proxy"
-  default: 'http://194.138.0.25:9400'
-  required: false
-  type: string
-  group: "Siemens NodeRed Configurations"
-
-- variable: appSandbox.enabled
-  default: "true"
-  description: "Select whether you want to enable the local app Sanbox and persist your data"
-  type: boolean
-  required: true
-  label: Enable App Sandbox
-  group: "App Sandbox"
-
-  # Used to deploy application on a specific box
-- variable: customResources.enablespecificdownload
-  default: false
-  description: "Download App to a specific device"
-  label: Enable Device Specific Download
-  type: boolean
-  show_subquestion_if: true
-  group: "Download Options"
-  subquestions:
-  - variable: nodeSelector.kubernetes\.io/hostname
-    default: "sim-edge-"
-    description: "Destination Device for App"
-    type: string
-    label: Specific Device
