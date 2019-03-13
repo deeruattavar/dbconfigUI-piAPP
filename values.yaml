@@ -6,59 +6,20 @@
 
 # Image specifiactions, ensure that the image is present on the Nexus with the specified tag
 image:
-  repository: siemens/inventory-ui
+  repository: pi-db-config
   tag: 0.0.1.12
   pullPolicy: IfNotPresent
   
-image1:
-  repository: siemens/inventory-ui-init
-  tag: 0.0.0.1.6
-  pullPolicy: IfNotPresent
+
 
 ingress:
   enabled: false
 
 service:
   enabled: true
-  port: 5000
-  servicePort: 5000
-  targetPort: 5000
-  hostPort: 5000
+  port: 7777
+  servicePort: 7777
+  targetPort: 7777
+  hostPort: 7777
 
 
-proxy:
-  interface: 'enp3s0'
-  verbose: '''True'''
-  serverAddr: 'localhost:5000'
-  centralMqtt: 'localhost:1883'
-  scannerMqtt: 'localhost:1889'
-  brokerAuth: 'inventoryview:test123'
-  tty: true
-  http_proxy: 'http://194.138.0.25:9400'
-  https_proxy: 'http://194.138.0.25:9400'
-  no_proxy: "127.0.0.1,code.siemens.com,localhost,139.22.228.167:5000,artifactory-test.siemens.net:8084"
-
- 
-resources:
-  requests:
-    cpu: 50m
-    memory: 100Mi
-
-auth:
-  brokerUsername: 'inventoryview' 
-  brokerPassword: 'test123'
-
-## Persist data to a persistent volume
-persistence:
-  enabled: true
-  storagePath: ""
-  type: DirectoryOrCreate
-  accessMode: ReadWriteOnce
-  size: 2Gi
-  annotations: {}
-  
-appSandbox:
-    enabled: "true"
-
-customResources:
-  enablespecificdownload: false
