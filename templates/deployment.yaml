@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image:  pi-db-config
           imagePullPolicy: IfNotPresent
           env:
-          - name: "interface"
+          - name: "ipaddress"
             value: {{ .Values.proxy.ipaddress }}
           
