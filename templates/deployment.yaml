@@ -1,0 +1,79 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "sim-edge-app-inventory.fullname" . }}
+  labels:
+    app: {{ include "sim-edge-app-inventory.name" . }}
+    chart: {{ include "sim-edge-app-inventory.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.scale}}
+  selector:
+    matchLabels:
+      app: {{ include "sim-edge-app-inventory.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "sim-edge-app-inventory.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: "interface"
+            value: {{ .Values.proxy.interface }}
+          - name: "verbose"
+            value: {{ .Values.proxy.verbose }}
+          - name: "serverAddr"
+            value: {{ .Values.proxy.serverAddr }}
+          - name: "centralMqtt"
+            value: {{ .Values.proxy.centralMqtt }}
+          - name: "scannerMqtt"
+            value: {{ .Values.proxy.scannerMqtt }}
+          - name: "brokerAuth"
+            value: {{ .Values.proxy.brokerAuth }}
+          - name: "brokerUsername"
+            value: {{ .Values.auth.brokerUsername }}
+          - name: "brokerPassword"
+            value: {{ .Values.auth.brokerPassword}}
+          - name: "http_proxy"
+            value: {{ .Values.proxy.http_proxy }}
+          - name: "https_proxy"
+            value: {{ .Values.proxy.https_proxy }}
+          - name: "no_proxy"
+            value: {{ .Values.proxy.no_proxy | quote }}
+          ports:
+          - containerPort: {{ .Values.service.port }}
+            name: "ui-port"
+            hostPort: {{ .Values.service.hostPort }}
+            protocol: TCP
+         {{ if .Values.appSandbox.enabled }}
+          volumeMounts:
+          - name: data
+            mountPath: /home/edge/siemens/automation/config/
+            {{ end }} 
+{{ if .Values.appSandbox.enabled }}
+      volumes:
+      - name: data
+        hostPath:
+          path: "/mnt/data/v1/{{ .Chart.Name }}/{{ .Release.Name }}/"
+          type: DirectoryOrCreate
+    {{ end }}
+    {{- if .Values.customResources.enablespecificdownload }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
