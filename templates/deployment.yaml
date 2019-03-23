@@ -2,19 +2,22 @@ apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: pi-app-db-config
+  labels:
+     app: db-config-ui
+     type: ui-app
 spec:
   replicas: {{ .Values.scale}}
   selector:
     matchLabels:
-      app: pi-app-db-config
+      app: db-config-ui
   template:
     metadata:
       labels:
-        app: pi-app-db-config
+        app: db-config-ui
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image:  pi-db-config
+          image:  dbconfig-ui
           imagePullPolicy: IfNotPresent
           env:
           - name: "ipaddress"
