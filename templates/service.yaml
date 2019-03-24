@@ -9,7 +9,7 @@ spec:
    ports:
      - port: 7777
        nodePort: 30080
-       targetPort:7777
+       targetPort: 7777
    selector:
        app: db-config-ui
        tier: frontend
