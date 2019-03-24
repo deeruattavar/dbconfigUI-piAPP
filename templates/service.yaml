@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-   name:dbconfigUI-piAPP-service
+   name: dbconfigUI-piAPP-service
    labels:
      app: dbconfigUI-piAPP-service
 spec:
