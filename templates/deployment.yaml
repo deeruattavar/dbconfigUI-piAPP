@@ -4,21 +4,25 @@ metadata:
   name: pi-app-db-config
   labels:
      app: db-config-ui
-     type: ui-app
+     tier: frontend
 spec:
   replicas: {{ .Values.scale}}
   selector:
     matchLabels:
       app: db-config-ui
+      tier: frontend
   template:
     metadata:
       labels:
         app: db-config-ui
+        tier: frontend
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image:  dbconfig-ui
+          image:  dbconfig-ui:latest
           imagePullPolicy: IfNotPresent
+          poerts:
+          - containerPort:7777
           env:
           - name: "ipaddress"
             value: {{ .Values.proxy.ipaddress }}
