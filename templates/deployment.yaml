@@ -23,7 +23,4 @@ spec:
           imagePullPolicy: IfNotPresent
           poerts:
           - containerPort:7777
-          env:
-          - name: "ipaddress"
-            value: {{ .Values.proxy.ipaddress }}
           
