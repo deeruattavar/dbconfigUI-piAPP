@@ -4,6 +4,7 @@ metadata:
   name: pi-app-db-config
   labels:
      app: db-config-ui
+     namespace: pi-app-namespace
      tier: frontend
 spec:
   replicas: {{ .Values.scale}}
