@@ -36,11 +36,11 @@ questions:
   group: "DB Init Configurations"
 
 # User input interface name
-- variable: "proxy.ipaddress"
-  label: IP of PI App 
-  description: "IP of PI app to be configure."
-  default: ""
-  required: true
-  type: string
-  group: "DB Init Configurations" 
+#- variable: "proxy.ipaddress"
+ # label: IP of PI App 
+ # description: "IP of PI app to be configure."
+  #default: ""
+  #required: true
+ # type: string
+  #group: "DB Init Configurations" 
 
