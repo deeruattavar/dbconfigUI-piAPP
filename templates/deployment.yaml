@@ -2,7 +2,6 @@ apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: pi-app-db-config
-  namespace: pi-app-namespace
   labels:
      app: db-config-ui
      tier: frontend
